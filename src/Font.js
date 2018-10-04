@@ -33,6 +33,13 @@ export function processFontFamily(name: ?string): ?string {
     return name;
   }
 
+  if (name.includes('FuturaBT')) {
+    // expo does not support bundling fonts on android since systemFonts (above) are defined statically
+    // they do not take into account the available fonts bundled with the app archive as on iOS
+    // so, we have to allow for it here and assume they've been bundled with the APK and avoid the js-side "isLoaded" check
+    return name;
+  }
+
   if (name.includes(Constants.sessionId)) {
     return name;
   }
